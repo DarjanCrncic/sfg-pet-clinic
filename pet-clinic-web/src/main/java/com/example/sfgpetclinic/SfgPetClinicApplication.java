@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SfgPetClinicApplication {
 
 	public static void main(String[] args) {
+		SpringApplication application = new SpringApplication(SfgPetClinicApplication.class);
+		application.setAdditionalProfiles("default");
 		SpringApplication.run(SfgPetClinicApplication.class, args);
 	}
 

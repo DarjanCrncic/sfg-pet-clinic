@@ -10,10 +10,12 @@ import com.example.sfgpetclinic.model.Pet;
 import com.example.sfgpetclinic.model.PetType;
 import com.example.sfgpetclinic.model.Speciality;
 import com.example.sfgpetclinic.model.Vet;
+import com.example.sfgpetclinic.model.Visit;
 import com.example.sfgpetclinic.services.OwnerService;
 import com.example.sfgpetclinic.services.PetTypeService;
 import com.example.sfgpetclinic.services.SpecialityService;
 import com.example.sfgpetclinic.services.VetService;
+import com.example.sfgpetclinic.services.VisitService;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -22,19 +24,21 @@ public class DataLoader implements CommandLineRunner {
 	private final VetService vetService;
 	private final PetTypeService petTypeService;
 	private final SpecialityService specialityService;
+	private final VisitService visitService;
 
-	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService) {
+	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService, VisitService visitService) {
 		this.ownerService = ownerService;
 		this.vetService = vetService;
 		this.petTypeService = petTypeService;
 		this.specialityService = specialityService;
+		this.visitService = visitService;
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		
 		int count = petTypeService.findAll().size();
-		
+			
 		if(count == 0) {
 			loadData();
 		}
@@ -93,6 +97,13 @@ public class DataLoader implements CommandLineRunner {
 		owner2.getPets().add(fionasCat);
 		
 		ownerService.save(owner2);
+		
+		Visit catVisit = new Visit();
+		catVisit.setPet(fionasCat);
+		catVisit.setDate(LocalDate.now());
+		catVisit.setDescription("sneazy kitty");
+		
+		visitService.save(catVisit);
 		
 		Vet vet1 = new Vet();
         vet1.setFirstName("Sam");
