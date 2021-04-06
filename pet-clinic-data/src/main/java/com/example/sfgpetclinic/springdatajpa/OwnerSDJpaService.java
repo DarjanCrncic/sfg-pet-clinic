@@ -1,6 +1,7 @@
 package com.example.sfgpetclinic.springdatajpa;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.context.annotation.Profile;
@@ -33,6 +34,11 @@ public class OwnerSDJpaService implements OwnerService {
 		
 		ownerRepository.findAll().forEach(owners::add);
 		return owners;
+	}
+	
+	@Override
+	public List<Owner> findAllByLastNameLike(String lastName){
+		return ownerRepository.findAllByLastNameLike(lastName);
 	}
 
 	@Override
