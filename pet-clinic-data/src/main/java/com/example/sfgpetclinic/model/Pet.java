@@ -11,18 +11,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "pets")
 public class Pet extends BaseEntity {
 	
@@ -39,7 +44,7 @@ public class Pet extends BaseEntity {
         }
 		
 	}
-
+	@NotBlank
 	@Column(name = "name")
 	private String name;
 	
@@ -51,7 +56,9 @@ public class Pet extends BaseEntity {
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
 	
+	@NotBlank
 	@Column(name = "birth_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
